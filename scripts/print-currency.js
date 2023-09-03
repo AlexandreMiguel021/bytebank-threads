@@ -1,5 +1,3 @@
-const list = document.querySelector('[data-list]')
-
 function generateCurrencyItems(name, value) {
 	const currencyItems = []
 
