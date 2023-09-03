@@ -1,6 +1,11 @@
 import printCurrency from './print-currency.js'
 
-const baseUrl = 'https://economia.awesomeapi.com.br'
+/**
+ * @typedef {Object} CurrencyData
+ * @property {Object} USDBRL
+ * @property {number} USDBRL.ask
+ */
+
 const dollarChart = document.getElementById('dollarChart')
 
 const chartToDollar = new Chart(dollarChart, {
@@ -18,40 +23,15 @@ const chartToDollar = new Chart(dollarChart, {
 })
 
 /**
- * @throws {Error} 
- * @returns {Promise<CurrencyData>}
- */
-async function fetchCurrencyData() {
-	try {
-		const response = await fetch(`${baseUrl}/json/last/USD-BRL`)
-
-		if (!response.ok) {
-			throw new Error('Não foi possível obter os dados.')
-		}
-
-		return await response.json()
-	} catch (error) {
-		throw error
-	}
-}
-
-/**
  * @returns {Promise<void>}
  */
-async function getCurrencyQuotes() {
+async function getCurrencyQuotes(currencyData) {
 	try {
-		const currencyData = await fetchCurrencyData()
 		updateCurrencyInfo(currencyData)
 	} catch (error) {
 		console.error('Ocorreu um erro:', error)
 	}
 }
-
-/**
- * @typedef {Object} CurrencyData
- * @property {Object} USDBRL 
- * @property {number} USDBRL.ask
- */
 
 /**
  * @param {CurrencyData} currencyData
@@ -61,7 +41,7 @@ function updateCurrencyInfo(currencyData) {
 	const value = currencyData.USDBRL.ask
 
 	updateCurrencyChart(chartToDollar, time, value)
-	printCurrency('Dolar', value)
+	printCurrency('Dólar', value)
 }
 
 /**
@@ -72,25 +52,30 @@ function getCurrentTime() {
 	const hours = String(date.getHours()).padStart(2, '0')
 	const minutes = String(date.getMinutes()).padStart(2, '0')
 	const seconds = String(date.getSeconds()).padStart(2, '0')
+
 	return `${hours}:${minutes}:${seconds}`
 }
 
 /**
  * @param {Chart} chartToDollar
  * @param {string} label
- * @param {number} data 
+ * @param {number} value
  */
-function updateCurrencyChart(chartToDollar, label, data) {
+function updateCurrencyChart(chartToDollar, label, value) {
 	chartToDollar.data.labels.push(label)
 	chartToDollar.data.datasets.forEach((dataset) => {
-		dataset.data.push(data)
+		dataset.data.push(value)
 	})
 
 	chartToDollar.update()
 }
 
-setInterval(() => {
-	getCurrencyQuotes()
-}, 10000)
+const workerDollar = new Worker('./scripts/workers/workerDollar.js')
 
-getCurrencyQuotes()
+workerDollar.postMessage('usd')
+
+workerDollar.addEventListener('message', (event) => {
+	/** @type {CurrencyData} */
+	const currencyData = event.data
+	getCurrencyQuotes(currencyData)
+})
