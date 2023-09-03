@@ -3,15 +3,20 @@
     flex-direction: column;
     align-items: center;
     background-color: var(--roxo);
-    padding: 5em 0;
-
+    padding: 5em 1em;
     filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.15));
 }
 
+.sidebar__logo{
+    max-width: 150px;
+    width: 100%;
+}
+
 .sidebar__avatar {
-    width: 150px;
+    max-width: 150px;
+    width: 100%;
     border-radius: 100%;
-    margin: 1em 0;
+    margin: 2em;
 }
 
 .sidebar h2 {
@@ -21,47 +26,3 @@
     color: white;
 }
 
-.sidebar__links {
-    display: flex;
-    flex-direction: column;
-}
-
-.sidebar__links a {
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
-    color: white;
-    text-decoration: none;
-    margin: 1em 0;
-}
-
-.sidebar__links a:first-of-type {
-    color: var(--verde-escuro);
-}
-
-.sidebar__linha {
-    margin: 3em 0;
-    color: black;
-    width: 50%;
-}
-
-.links__icone {
-    padding-left: 2em;
-    background-repeat: no-repeat;
-}
-
-.dashboard {
-    background-image: url("../imagens/icon-dashboard.png")
-}
-
-.cofre {
-    background-image: url("../imagens/icon-cofre.png")
-}
-
-.configuracao {
-    background-image: url("../imagens/icon-configuracao.png")
-}
-
-.duvida {
-    background-image: url("../imagens/icon-duvida.png")
-}

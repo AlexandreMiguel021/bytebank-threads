@@ -13,28 +13,21 @@
 
 <body class="container">
   <aside class="sidebar">
-    <img src="./imagens/logo.png" alt="Logo do bytebank" />
+    <img src="./imagens/logo.png" alt="Logo do bytebank" class="sidebar__logo" />
     <img src="./imagens/avatar.png" alt="Avatar do usuário" class="sidebar__avatar" />
-    <h2>Moni Hillman</h2>
-    <hr class="sidebar__linha" />
-    <nav class="sidebar__links">
-      <a href="#"><span class="links__icone dashboard"></span>Dashboard</a>
-      <a href="#"><span class="links__icone cofre">Investimentos</a>
-      <a href="#"><span class="links__icone configuracao">Minha Conta</a>
-      <a href="#"><span class="links__icone duvida">Dúvidas Frequentes</a>
-    </nav>
+    <h2>User</h2>
   </aside>
 
   <main class="dados">
     <header class="cabecalho">
-      <h2>Olá, Moni! Estes são os detalhes da sua cotação:</h2>
+      <h2>Olá, user! Estes são os detalhes da sua cotação:</h2>
     </header>
 
     <article class="dadosDolar">
+      <span class="grafico__ilustracao-dolar"></span>
       <div class="grafico">
         <div class="grafico__titulo">
-          <span class="grafico__ilustracao-dolar"></span>
-          <h2>Variação da moeda desde o login</h2>
+          <h2>Variação da moeda</h2>
         </div>
         <canvas id="dollarChart"></canvas>
       </div>
