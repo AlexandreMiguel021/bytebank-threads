@@ -2,23 +2,30 @@ import printCurrency from './print-currency.js'
 
 /**
  * @typedef {Object} CurrencyData
- * @property {Object} USDBRL
- * @property {number} USDBRL.ask
+ * @property {number} ask
+ * @property {Code} code
+ */
+
+/**
+ * @typedef {'USD' | 'JYP'} Code
  */
 
 const dollarChart = document.getElementById('dollarChart')
+const yenChart = document.getElementById('yenChart')
 
 const chartToDollar = new Chart(dollarChart, {
 	type: 'line',
 	data: {
 		labels: [],
-		datasets: [
-			{
-				label: 'Dólar',
-				data: [],
-				borderWidth: 1
-			}
-		]
+		datasets: [{ label: 'Dólar', data: [], borderWidth: 1 }]
+	}
+})
+
+const chartToYen = new Chart(yenChart, {
+	type: 'line',
+	data: {
+		labels: [],
+		datasets: [{ label: 'Iene', data: [], borderWidth: 1 }]
 	}
 })
 
@@ -38,10 +45,18 @@ async function getCurrencyQuotes(currencyData) {
  */
 function updateCurrencyInfo(currencyData) {
 	const time = getCurrentTime()
-	const value = currencyData.USDBRL.ask
+	const value = currencyData.ask
+	const chart = getChart(currencyData.code)
 
-	updateCurrencyChart(chartToDollar, time, value)
-	printCurrency('Dólar', value)
+	updateCurrencyChart(chart, time, value)
+	printCurrency(currencyData.code, value)
+}
+
+/**
+ * @param {Code} code 
+ */
+function getChart(code) {
+	return { USD: chartToDollar, JPY: chartToYen }[code]
 }
 
 /**
@@ -70,12 +85,23 @@ function updateCurrencyChart(chartToDollar, label, value) {
 	chartToDollar.update()
 }
 
+/**
+ * Workers
+ */
 const workerDollar = new Worker('./scripts/workers/workerDollar.js')
+const workerYen = new Worker('./scripts/workers/workerYen.js')
 
 workerDollar.postMessage('usd')
+workerYen.postMessage('jpy')
 
 workerDollar.addEventListener('message', (event) => {
 	/** @type {CurrencyData} */
-	const currencyData = event.data
+	const currencyData = event.data.USDBRL
+	getCurrencyQuotes(currencyData)
+})
+
+workerYen.addEventListener('message', (event) => {
+	/** @type {CurrencyData} */
+	const currencyData = event.data.JPYBRL
 	getCurrencyQuotes(currencyData)
 })

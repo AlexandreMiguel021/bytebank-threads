@@ -9,8 +9,9 @@ function generateCurrencyItems(name, value) {
 	return currencyItems
 }
 
-function printCurrencyList(currencyItems) {
-	const list = document.querySelector('[data-list]')
+function printCurrencyList(code, currencyItems) {
+	console.log(currencyItems)
+	const list = document.querySelector(`[data-list-${code}]`)
 	list.innerHTML = ''
 
 	currencyItems.forEach((itemText) => {
@@ -20,7 +21,7 @@ function printCurrencyList(currencyItems) {
 	})
 }
 
-export default function printCurrency(name, value) {
-	const currencyItems = generateCurrencyItems(name, value)
-	printCurrencyList(currencyItems)
+export default function printCurrency(code, value) {
+	const currencyItems = generateCurrencyItems(code, value)
+	printCurrencyList(code, currencyItems)
 }

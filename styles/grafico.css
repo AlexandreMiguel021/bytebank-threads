@@ -44,6 +44,9 @@
 
 .grafico__ilustracao-iene {
     background-image: url('../imagens/iene.png');
+    width: 30px;
+    height: 30px;
+    background-size: cover;
 }
 
 .grafico__titulo h2 {
