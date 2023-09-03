@@ -1,0 +1,28 @@
+{
+  "name": "bytebank",
+  "version": "1.0.0",
+  "description": " Working with Threads for Simultaneous Requests",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexandreMiguel021/bytebank-threads.git"
+  },
+  "keywords": [
+    "javascript",
+    "css",
+    "html",
+    "threads"
+  ],
+  "author": "Alexandre Freitas Miguel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexandreMiguel021/bytebank-threads/issues"
+  },
+  "homepage": "https://github.com/AlexandreMiguel021/bytebank-threads#readme",
+  "dependencies": {
+    "chart.js": "^4.4.0"
+  }
+}
